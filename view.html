@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Мій сайт — Classic (Перегляд Collapse)</title>
+
+<style>
+body { margin: 0; padding: 0; background: #f0f0f0; font-family: Arial, sans-serif; }
+table { border-collapse: collapse; margin: 0 auto; max-width: 700px; width: 100%; background: #ffffff; }
+h1, h2, h3, p { margin: 0; padding: 5px 0; }
+a { color: #000; text-decoration: none; font-weight: bold; }
+a:hover { text-decoration: underline; }
+
+.header { background: #a9c9f4; text-align: left; padding: 15px; }
+.nav { background: #a9c9f4; text-align: left; padding: 10px 15px; }
+.nav a { margin-right: 15px; }
+
+.left { width: 180px; background: #d6e8d2; padding: 10px; }
+
+/* Об’єднаний центральний + правий блок */
+.main-wide { padding: 10px; background: #ffffff; }
+
+.footer { background: #a9c9f4; padding: 15px; font-size: 18px; font-weight: bold; text-align: left; }
+</style>
+</head>
+
+<body>
+
+<table role="presentation">
+
+<!-- HEADER -->
+<tr>
+<td class="header" colspan="3">
+    <h1>Мій сайт</h1>
+    <h3>Code Your Future, One Line at a Time</h3>
+</td>
+</tr>
+
+<!-- NAV -->
+<tr>
+<td class="nav" colspan="3">
+    <a href="index.html">Головна</a>
+    <a href="view.html">Перегляд Collapse</a>
+</td>
+</tr>
+
+<!-- CONTENT -->
+<tr>
+
+<!-- LEFT -->
+<td class="left">
+    <h2>Геть рутину</h2>
+    <p>Автоматизація скорочує час.</p>
+</td>
+
+<!-- ОБ’ЄДНАНИЙ БЛОК (тільки collapse елементи) -->
+<td class="main-wide" colspan="2">
+
+<h2>Набір Collapse-елементів</h2>
+<div id="collapseContainer"></div>
+
+<script>
+function loadData() {
+    fetch('collapse_data.json')
+        .then(res => res.json())
+        .then(data => render(data))
+        .catch(err => console.error(err));
+}
+
+function render(data) {
+    const box = document.getElementById('collapseContainer');
+    box.innerHTML = '';
+
+    data.forEach(item => {
+        const head = document.createElement('div');
+        head.style.background = '#a9c9f4';
+        head.style.padding = '10px';
+        head.style.cursor = 'pointer';
+        head.style.marginBottom = '5px';
+        head.style.fontWeight = 'bold';
+        head.textContent = item.title;
+
+        const content = document.createElement('div');
+        content.style.border = '1px solid #a9c9f4';
+        content.style.padding = '10px';
+        content.style.display = 'none';
+        content.style.marginBottom = '10px';
+        content.textContent = item.content;
+
+        head.onclick = () => {
+            content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+        };
+
+        box.appendChild(head);
+        box.appendChild(content);
+    });
+}
+
+loadData();
+setInterval(loadData, 5000);
+</script>
+
+</td>
+
+</tr>
+
+<!-- FOOTER -->
+<tr>
+<td class="footer" colspan="3">
+    <p>"Навчайся та твори!"</p>
+</td>
+</tr>
+
+</table>
+
+</body>
+</html>
